@@ -1,0 +1,44 @@
+﻿@model DataModelViewModel
+@{
+}
+
+<form autocomplete="off" asp-controller="Home" asp-action="Agendar" method="post">
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Data</label>
+    <input readonly asp-for="Data" type="text" class="form-control" id="exampleFormControlInput1" value="@ViewBag.data">
+  </div>
+  <br />
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Horas Disponiveis</label>
+    <select asp-for="Hora" class="form-control" id="exampleFormControlSelect1">
+        @{
+        var controle = 0;
+        foreach(var x in ViewBag.horas)
+        {
+                    <option>@ViewBag.horas[controle]</option>
+                    controle += 1;
+                }
+        }
+    </select>
+
+  </div>
+
+  <br />
+  <hr /><br />
+  <h2>Seus Dados:</h2>
+   <div class="form-group">
+    <label for="exampleFormControlInput1">Nome</label>
+    <input autocomplete="off" asp-for="Pessoa.Nome" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Digite seu nome...">
+  </div>
+
+  <br />
+
+   <div style="margin-bottom:20px" class="form-group">
+    <label for="exampleFormControlInput1">Telefone</label>
+    <input autocomplete="off" asp-for="Pessoa.telefone" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Digite seu telefone...">
+  </div>
+
+  <button type="submit" class="btn btn-danger btn-lg btn-block">Agendar</button>
+  <button asp-action="Index" type="submit" class="btn btn-secondary btn-lg btn-block">Escolher outra data</button>
+
+</form>
