@@ -13,7 +13,10 @@ namespace Agendamento.App.Models
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string Hora { get; set; }
 
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
+        public string TipoSolicitacao { get; set; }
 
+        public string? SolicitacaoPersonalizada { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public PessoaViewModel Pessoa { get; set; }

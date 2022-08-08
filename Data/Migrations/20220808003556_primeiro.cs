@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class primeiroTeste : Migration
+    public partial class primeiro : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,10 @@ namespace Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    telefone = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Matricula = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,6 +32,8 @@ namespace Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Data = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Hora = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TipoSolicitacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SolicitacaoPersonalizada = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PessoaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

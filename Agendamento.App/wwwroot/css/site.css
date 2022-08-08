@@ -20,3 +20,7 @@ body {
 .h1_danger {
     color: #FE2E64;
 }
+
+#InputPersonalizada{
+    display:none;
+}

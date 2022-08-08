@@ -39,6 +39,13 @@ namespace Data.Migrations
                     b.Property<Guid>("PessoaId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("SolicitacaoPersonalizada")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoSolicitacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PessoaId");
@@ -51,6 +58,18 @@ namespace Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Matricula")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
                         .IsRequired()

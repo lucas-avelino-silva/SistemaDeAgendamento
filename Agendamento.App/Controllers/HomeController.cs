@@ -24,61 +24,49 @@ namespace Agendamento.App.Controllers
 
         public IActionResult Index()
         {
-            
+            ViewBag.TipoSolicitacao = new List<string>() { "Adesão ao PrevMais", "Requerimento de Benefícios", "Outros - Indicar" };
+
+            if (TempData["resultado"] != null)
+            {
+                var result = TempData["resultado"] as string;
+                ViewBag.result = result;
+            }
             return View();
-        }
-
-
-
-        [HttpPost]
-        public IActionResult ConsultarData(ConsultaDataViewModel data)
-        {
-            var datas = _repository.ObterPorData(data.DataHoje);
-            if (datas == null)
-            {
-                var horaTemp = new List<string>() { "10:00", "13:00", "14:00" };
-                ViewBag.horas = horaTemp;
-                ViewBag.data = data.DataHoje;
-                return View();
-            }
-
-            var horasCandidatas = new List<string>() { "10:00", "13:00", "14:00" };
-            var horaPode = new List<string>();
-            var horaNaoPode = new List<string>();
-            foreach (var x in datas)
-            {
-                if(x.Hora == "10:00" || x.Hora == "13:00" || x.Hora == "14:00")
-                {
-                    horaNaoPode.Add(x.Hora);
-                }
-            }
-
-            foreach(var hora in horasCandidatas) 
-            {
-                if (!horaNaoPode.Contains(hora))
-                {
-                    horaPode.Add(hora);
-                }
-            }
-
-            ViewBag.horas = horaPode;
-            ViewBag.data = data.DataHoje;
-            return View();
-                
         }
 
         [HttpPost]
         public IActionResult Agendar(DataModelViewModel form)
         {
-            if (ModelState.IsValid)
+            if(form.TipoSolicitacao == "Outros - Indicar" && form.SolicitacaoPersonalizada == null)
             {
-                _repository.Adicionar(_Map.Map<DataModel>(form));
-                ViewData["resultado"] = "Agendado com Sucesso!";
+                TempData["resultado"] = "Digite a sua solicitação!";
                 return RedirectToAction("Index");
             }
-
-            ViewData["resultado"] = "Não foi possivel agendar, tentar mais tarde!";
+            var text = "Nada Selecionado";
+            if (form.Hora == text || form.TipoSolicitacao == text)
+            {
+                TempData["resultado"] = "Preencha os campos!";
+                return RedirectToAction("Index");
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _repository.Adicionar(_Map.Map<DataModel>(form));
+                    TempData["resultado"] = "Agendado com Sucesso!";
+                    return RedirectToAction("Index");
+                }
+                catch(Exception ex)
+                {
+                    var exception = ex.ToString();
+                    TempData["resultado"] = exception;
+                    return RedirectToAction("Index");
+                }
+            }
+            TempData["resultado"] = "Formulário inválido";
             return RedirectToAction("Index");
+
+
         }
 
         public IActionResult ObterTodos()
